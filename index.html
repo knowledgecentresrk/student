@@ -12,197 +12,179 @@
     }
 
     body {
-      font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(145deg, #f5f0e7 0%, #e8dfd1 100%);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: #f2efe9;  /* soft warm background */
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-      position: relative;
+      padding: 12px;
     }
 
-    /* Canvas for stars and sparkles – light and magical */
-    #starCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* Main card – clean white with subtle gold details */
+    /* Main card – compact, clean, premium */
     .card {
-      position: relative;
-      z-index: 10;
-      max-width: 460px;
+      max-width: 420px;
       width: 100%;
       background: #ffffff;
-      border-radius: 48px 48px 40px 40px;
-      box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(212, 175, 55, 0.3) inset;
+      border-radius: 36px 36px 30px 30px;
+      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.15), 0 5px 10px -3px rgba(0, 0, 0, 0.05);
       overflow: hidden;
-      animation: fadeUp 0.5s ease;
+      transition: transform 0.2s;
+      animation: fadeIn 0.3s ease;
     }
 
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(15px); }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(8px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* School header – rich, deep navy */
+    /* School header – deep navy */
     .school-header {
       background: #0b2545;
       color: white;
-      padding: 28px 24px 20px;
+      padding: 22px 20px 16px;
       text-align: center;
       border-bottom: 3px solid #c9a03d;
     }
 
     .school-name {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      line-height: 1.3;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
     }
 
     .school-address {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 300;
       color: #ddcba4;
-      margin-top: 6px;
+      margin-top: 5px;
     }
 
-    /* "Hat and Sash" ribbon – below header, above photo */
+    /* "Hat and Sash" ribbon – compact */
     .hat-sash-ribbon {
-      background: #faf6e9;
-      padding: 12px 20px;
+      background: #fcf9f2;
+      padding: 10px 16px;
       text-align: center;
-      border-bottom: 1px dashed #c9a03d;
+      border-bottom: 1px solid #c9a03d30;
       border-top: 1px solid #c9a03d20;
     }
 
     .hat-sash-ribbon span {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 500;
       color: #0b2545;
       background: #e9dbbd;
-      padding: 6px 24px;
-      border-radius: 60px;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      padding: 4px 20px;
+      border-radius: 40px;
+      letter-spacing: 0.8px;
       display: inline-block;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     .hat-sash-ribbon span::before {
       content: "🎓 ";
-      font-size: 24px;
-      filter: drop-shadow(0 2px 2px #c9a03d);
+      font-size: 20px;
     }
     .hat-sash-ribbon span::after {
       content: " 🎓";
-      font-size: 24px;
-      filter: drop-shadow(0 2px 2px #c9a03d);
+      font-size: 20px;
     }
 
-    /* Photo container */
+    /* Photo container – smaller, fits tall images */
     .photo-container {
-      margin: 20px 24px 12px;
-      border-radius: 32px;
+      margin: 16px 20px 8px;
+      border-radius: 24px;
       overflow: hidden;
       background: #f2ede3;
-      box-shadow: 0 15px 25px -8px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 16px -6px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      max-height: 55vh;
+      max-height: 45vh;  /* reduced to lower card height */
       border: 2px solid #ffffff;
-      outline: 1px solid #c9a03d40;
+      outline: 1px solid #c9a03d30;
     }
 
     .photo {
       width: 100%;
       height: auto;
-      max-height: 55vh;
+      max-height: 45vh;
       object-fit: contain;
       display: block;
     }
 
     .photo-placeholder {
       color: #8b7a62;
-      padding: 50px 20px;
+      padding: 35px 16px;
       text-align: center;
-      font-size: 18px;
+      font-size: 16px;
     }
 
-    /* Student details */
+    /* Student details – compact */
     .student-name {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
       text-align: center;
-      margin: 12px 24px 4px;
+      margin: 8px 20px 2px;
       color: #0b2545;
       word-break: break-word;
     }
 
     .student-message {
-      font-size: 20px;
+      font-size: 18px;
       text-align: center;
-      margin: 0 24px 20px;
+      margin: 0 20px 16px;
       color: #3a4a5e;
       background: #f8f4ec;
-      padding: 18px 18px;
-      border-radius: 50px;
-      border-left: 4px solid #c9a03d;
-      border-right: 4px solid #c9a03d;
+      padding: 14px 14px;
+      border-radius: 40px;
+      border-left: 3px solid #c9a03d;
+      border-right: 3px solid #c9a03d;
       font-weight: 400;
       word-break: break-word;
     }
 
-    /* Download button – elegant gold */
+    /* Download button – sleek gold */
     .download-btn {
       display: block;
-      width: calc(100% - 48px);
-      margin: 0 24px 24px;
-      padding: 16px 10px;
+      width: calc(100% - 40px);
+      margin: 0 20px 18px;
+      padding: 14px 10px;
       background: linear-gradient(145deg, #c9a03d, #b48a2c);
       border: none;
-      border-radius: 50px;
+      border-radius: 40px;
       color: #0b2545;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       text-align: center;
-      box-shadow: 0 8px 18px -5px #a67c2e80, 0 2px 0 0 #f3d48b inset;
-      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 6px 12px -5px #a67c2e80, 0 1px 0 0 #f3d48b inset;
+      transition: transform 0.1s;
       cursor: pointer;
       border: none;
     }
 
     .download-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 4px 10px -3px #7a5e2b;
+      transform: scale(0.98);
     }
 
     .footer {
-      font-size: 15px;
+      font-size: 13px;
       text-align: center;
       color: #8f9bae;
-      padding: 0 24px 28px;
+      padding: 0 20px 20px;
     }
 
     /* Loading / error */
     .loading, .error {
       text-align: center;
-      padding: 40px 20px;
+      padding: 35px 16px;
       color: #0b2545;
     }
     .error { color: #b34a4a; }
   </style>
 </head>
 <body>
-
-  <canvas id="starCanvas"></canvas>
 
   <div class="card">
     <!-- School header -->
@@ -211,7 +193,7 @@
       <div class="school-address">Sector - 23, Dwarka, New Delhi 110077</div>
     </div>
 
-    <!-- Hat & Sash ribbon (exactly as requested) -->
+    <!-- Hat & Sash ribbon -->
     <div class="hat-sash-ribbon">
       <span>Hat and Sash</span>
     </div>
@@ -223,112 +205,6 @@
   </div>
 
   <script>
-    // ==================== LIGHTWEIGHT STARS & SPARKLES ====================
-    (function() {
-      const canvas = document.getElementById('starCanvas');
-      const ctx = canvas.getContext('2d');
-      let width, height;
-      let particles = [];
-
-      function initParticles() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-
-        // Total particles ~ 100 – mix of stars and sparkles
-        const total = Math.min(110, Math.floor((width * height) / 6000));
-        particles = [];
-        for (let i = 0; i < total; i++) {
-          // 70% stars (falling), 30% sparkles (twinkling)
-          const type = Math.random() < 0.7 ? 'star' : 'sparkle';
-          particles.push({
-            type: type,
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: type === 'star' ? Math.random() * 2.5 + 1 : Math.random() * 4 + 2,
-            speed: type === 'star' ? Math.random() * 0.5 + 0.2 : 0, // sparkles don't fall
-            alpha: Math.random() * 0.5 + 0.3,
-            flickerSpeed: Math.random() * 0.02 + 0.005,
-            angle: Math.random() * Math.PI * 2, // for sparkle rotation (optional)
-            color: type === 'star' 
-              ? `hsl(${45 + Math.random()*20}, 70%, 70%)` // goldish
-              : `hsl(${50 + Math.random()*30}, 90%, 75%)`, // brighter sparkles
-          });
-        }
-      }
-
-      function drawParticles() {
-        ctx.clearRect(0, 0, width, height);
-        ctx.shadowColor = '#fffacd';
-        ctx.shadowBlur = 8;
-
-        particles.forEach(p => {
-          // Twinkling effect: alpha varies with time
-          const twinkle = Math.sin(Date.now() * p.flickerSpeed + p.x) * 0.15;
-          ctx.globalAlpha = Math.min(1, Math.max(0.2, p.alpha + twinkle));
-
-          if (p.type === 'sparkle') {
-            // Draw sparkle as a 4-point star or just a larger circle with glow
-            ctx.fillStyle = p.color;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-            // Add extra small rays for sparkle effect (optional, lightweight)
-            if (p.radius > 2.5) {
-              ctx.beginPath();
-              for (let i = 0; i < 4; i++) {
-                let angle = p.angle + i * Math.PI/2;
-                let dx = Math.cos(angle) * p.radius * 1.8;
-                let dy = Math.sin(angle) * p.radius * 1.8;
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p.x + dx, p.y + dy);
-              }
-              ctx.strokeStyle = p.color;
-              ctx.lineWidth = 1.2;
-              ctx.stroke();
-            }
-          } else {
-            // Star – simple circle
-            ctx.fillStyle = p.color;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-          }
-
-          // Move stars downward
-          if (p.type === 'star') {
-            p.y += p.speed;
-            if (p.y > height) {
-              p.y = 0;
-              p.x = Math.random() * width;
-            }
-          } else {
-            // Sparkles gently drift or just stay; we can add a tiny random drift
-            // but keep it minimal to stay lightweight
-            p.x += (Math.random() - 0.5) * 0.1;
-            p.y += (Math.random() - 0.5) * 0.1;
-            // Wrap around screen edges (optional)
-            if (p.x < 0) p.x = width;
-            if (p.x > width) p.x = 0;
-            if (p.y < 0) p.y = height;
-            if (p.y > height) p.y = 0;
-          }
-        });
-
-        ctx.shadowBlur = 0;
-        requestAnimationFrame(drawParticles);
-      }
-
-      window.addEventListener('resize', () => {
-        initParticles();
-      });
-
-      initParticles();
-      drawParticles();
-    })();
-
-    // ==================== STUDENT DATA LOADING ====================
     (function() {
       const studentId = new URLSearchParams(window.location.search).get('id');
       const contentDiv = document.getElementById('content');

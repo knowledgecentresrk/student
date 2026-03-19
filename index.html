@@ -103,7 +103,10 @@
             <div class="footer">ID: ${studentId}</div>
           `;
 
-          // Function to try loading image with different extensions
+          // List of extensions to try – .JPG first because all your photos are uppercase
+          const extensions = ['JPG', 'jpg', 'PNG', 'png'];
+
+          // Function to try loading image with a specific extension
           const tryImage = (ext) => {
             return new Promise((resolve, reject) => {
               const img = new Image();
@@ -113,36 +116,28 @@
             });
           };
 
-          // List of extensions to try in order
-const extensions = ['jpg', 'JPG', 'png', 'PNG'];
+          // Try each extension in sequence
+          let promise = Promise.reject();
+          extensions.forEach(ext => {
+            promise = promise.catch(() => tryImage(ext));
+          });
 
-// Function to try loading with a given extension
-const tryImage = (ext) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = `images/${studentId}.${ext}`;
-  });
-};
-
-// Try each extension in sequence
-let promise = Promise.reject();
-extensions.forEach(ext => {
-  promise = promise.catch(() => tryImage(ext));
-});
-
-promise
-  .then(img => {
-    // Success with some extension
-    document.getElementById('photoContainer').innerHTML = '';
-    document.getElementById('photoContainer').appendChild(img);
-    img.className = 'photo';
-  })
-  .catch(() => {
-    // All extensions failed
-    document.getElementById('photoContainer').innerHTML = '<div class="photo-placeholder">📷 No photo</div>';
-  });
+          promise
+            .then(img => {
+              // Success with some extension
+              document.getElementById('photoContainer').innerHTML = '';
+              document.getElementById('photoContainer').appendChild(img);
+              img.className = 'photo';
+            })
+            .catch(() => {
+              // All extensions failed
+              document.getElementById('photoContainer').innerHTML = '<div class="photo-placeholder">📷 No photo</div>';
+            });
+        })
+        .catch(err => {
+          document.getElementById('content').innerHTML = '<div class="error">Student not found</div>';
+        });
+    }
   </script>
 </body>
 </html>

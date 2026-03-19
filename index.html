@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>The Indian Heights School – Scholar Profile</title>
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,179 +16,244 @@
     }
 
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      background: #f2efe9;  /* soft warm background */
+      font-family: 'Montserrat', sans-serif;
+      background: #faf7f2;  /* soft cream */
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 12px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* Main card – compact, clean, premium */
+    /* Subtle diagonal pattern overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(45deg, rgba(201, 160, 61, 0.02) 0px, rgba(201, 160, 61, 0.02) 20px, transparent 20px, transparent 40px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Canvas for stars and sparkles (lightweight animation) */
+    #canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.6;
+    }
+
+    /* Main card – deep navy, layered shadow, soft corners */
     .card {
+      position: relative;
+      z-index: 10;
       max-width: 420px;
       width: 100%;
       background: #ffffff;
-      border-radius: 36px 36px 30px 30px;
-      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.15), 0 5px 10px -3px rgba(0, 0, 0, 0.05);
+      border-radius: 28px;
+      box-shadow: 0 25px 40px -12px rgba(10, 25, 47, 0.3),
+                  0 10px 20px -8px rgba(0, 0, 0, 0.15),
+                  0 0 0 1px rgba(201, 160, 61, 0.3) inset;
       overflow: hidden;
+      animation: fadeUp 0.5s ease;
       transition: transform 0.2s;
-      animation: fadeIn 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.01);
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(8px); }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(12px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
     /* School header – deep navy */
     .school-header {
-      background: #0b2545;
+      background: #0a192f;  /* deep navy */
       color: white;
-      padding: 22px 20px 16px;
+      padding: 24px 20px 18px;
       text-align: center;
-      border-bottom: 3px solid #c9a03d;
+      border-bottom: 4px solid #c9a03d;
     }
 
     .school-name {
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       line-height: 1.2;
+      margin-bottom: 6px;
     }
 
     .school-address {
       font-size: 13px;
       font-weight: 300;
       color: #ddcba4;
-      margin-top: 5px;
+      letter-spacing: 0.3px;
     }
 
-    /* "Hat and Sash" ribbon – compact */
-    .hat-sash-ribbon {
-      background: #fcf9f2;
-      padding: 10px 16px;
+    /* "Hat and Sash" ribbon – enhanced with 3D fold */
+    .ribbon {
+      background: linear-gradient(145deg, #e9dbbd, #dac29c);
+      padding: 12px 16px;
       text-align: center;
-      border-bottom: 1px solid #c9a03d30;
-      border-top: 1px solid #c9a03d20;
+      position: relative;
+      border-bottom: 2px solid #c9a03d;
+      border-top: 2px solid #c9a03d20;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
-
-    .hat-sash-ribbon span {
-      font-size: 18px;
-      font-weight: 500;
-      color: #0b2545;
-      background: #e9dbbd;
-      padding: 4px 20px;
+    .ribbon::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(135deg, transparent 30%, #c9a03d 50%, transparent 70%);
+      opacity: 0.4;
+    }
+    .ribbon span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #0a192f;
+      background: rgba(255,255,240,0.5);
+      padding: 5px 28px;
       border-radius: 40px;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
       display: inline-block;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      backdrop-filter: blur(2px);
     }
-
-    .hat-sash-ribbon span::before {
+    .ribbon span::before {
       content: "🎓 ";
-      font-size: 20px;
+      font-size: 22px;
+      filter: drop-shadow(0 2px 2px #c9a03d);
     }
-    .hat-sash-ribbon span::after {
+    .ribbon span::after {
       content: " 🎓";
-      font-size: 20px;
+      font-size: 22px;
+      filter: drop-shadow(0 2px 2px #c9a03d);
     }
 
-    /* Photo container – smaller, fits tall images */
+    /* Photo container – polaroid‑style frame */
     .photo-container {
-      margin: 16px 20px 8px;
-      border-radius: 24px;
+      margin: 18px 22px 10px;
+      border-radius: 20px;
       overflow: hidden;
-      background: #f2ede3;
-      box-shadow: 0 8px 16px -6px rgba(0,0,0,0.1);
+      background: #ffffff;
+      box-shadow: 0 12px 22px -10px rgba(10, 25, 47, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      max-height: 45vh;  /* reduced to lower card height */
-      border: 2px solid #ffffff;
-      outline: 1px solid #c9a03d30;
+      max-height: 48vh;
+      border: 4px solid #ffffff;
+      outline: 1px solid #c9a03d40;
     }
 
     .photo {
       width: 100%;
       height: auto;
-      max-height: 45vh;
+      max-height: 48vh;
       object-fit: contain;
       display: block;
     }
 
     .photo-placeholder {
-      color: #8b7a62;
-      padding: 35px 16px;
+      color: #7a6a52;
+      padding: 40px 16px;
       text-align: center;
       font-size: 16px;
     }
 
-    /* Student details – compact */
+    /* Student details – elegant spacing */
     .student-name {
-      font-size: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
       font-weight: 700;
       text-align: center;
-      margin: 8px 20px 2px;
-      color: #0b2545;
+      margin: 8px 22px 2px;
+      color: #0a192f;
       word-break: break-word;
+      line-height: 1.2;
     }
 
     .student-message {
       font-size: 18px;
       text-align: center;
-      margin: 0 20px 16px;
-      color: #3a4a5e;
+      margin: 0 22px 18px;
+      color: #2c3e4f;
       background: #f8f4ec;
-      padding: 14px 14px;
-      border-radius: 40px;
-      border-left: 3px solid #c9a03d;
-      border-right: 3px solid #c9a03d;
+      padding: 14px 16px;
+      border-radius: 50px;
+      border-left: 4px solid #c9a03d;
+      border-right: 4px solid #c9a03d;
       font-weight: 400;
       word-break: break-word;
+      line-height: 1.5;
     }
 
-    /* Download button – sleek gold */
+    /* Download button – premium gold */
     .download-btn {
       display: block;
-      width: calc(100% - 40px);
-      margin: 0 20px 18px;
-      padding: 14px 10px;
-      background: linear-gradient(145deg, #c9a03d, #b48a2c);
+      width: calc(100% - 44px);
+      margin: 0 22px 18px;
+      padding: 16px 10px;
+      background: linear-gradient(145deg, #c9a03d, #b2892b);
       border: none;
-      border-radius: 40px;
-      color: #0b2545;
-      font-size: 18px;
+      border-radius: 50px;
+      color: #0a192f;
+      font-size: 20px;
       font-weight: 600;
       text-align: center;
-      box-shadow: 0 6px 12px -5px #a67c2e80, 0 1px 0 0 #f3d48b inset;
-      transition: transform 0.1s;
+      box-shadow: 0 10px 16px -6px #8f6f2d80, 0 2px 0 0 #f3d48b inset;
+      transition: transform 0.15s, box-shadow 0.15s;
       cursor: pointer;
       border: none;
+      letter-spacing: 0.5px;
     }
-
     .download-btn:active {
       transform: scale(0.98);
+      box-shadow: 0 5px 10px -3px #6b4f20;
+    }
+    /* Icon via pseudo-element */
+    .download-btn::before {
+      content: "⬇️ ";
+      font-size: 22px;
+      margin-right: 6px;
     }
 
     .footer {
       font-size: 13px;
       text-align: center;
       color: #8f9bae;
-      padding: 0 20px 20px;
+      padding: 0 22px 22px;
+      font-weight: 400;
+      letter-spacing: 0.3px;
     }
 
-    /* Loading / error */
+    /* Loading / error states */
     .loading, .error {
       text-align: center;
-      padding: 35px 16px;
-      color: #0b2545;
+      padding: 40px 16px;
+      color: #0a192f;
+      font-size: 16px;
     }
     .error { color: #b34a4a; }
   </style>
 </head>
 <body>
+
+  <canvas id="canvas"></canvas>
 
   <div class="card">
     <!-- School header -->
@@ -193,8 +262,8 @@
       <div class="school-address">Sector - 23, Dwarka, New Delhi 110077</div>
     </div>
 
-    <!-- Hat & Sash ribbon -->
-    <div class="hat-sash-ribbon">
+    <!-- Hat & Sash ribbon (enhanced) -->
+    <div class="ribbon">
       <span>Hat and Sash</span>
     </div>
 
@@ -205,6 +274,99 @@
   </div>
 
   <script>
+    // ==================== LIGHTWEIGHT STARS & SPARKLES ====================
+    (function() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let particles = [];
+
+      function initParticles() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        // Approximately 100 particles – mix of falling stars and twinkling sparkles
+        const total = Math.min(100, Math.floor((width * height) / 7000));
+        particles = [];
+        for (let i = 0; i < total; i++) {
+          const isStar = Math.random() < 0.7; // 70% stars, 30% sparkles
+          particles.push({
+            type: isStar ? 'star' : 'sparkle',
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: isStar ? Math.random() * 2.5 + 1 : Math.random() * 4 + 2,
+            speedY: isStar ? Math.random() * 0.4 + 0.15 : 0,
+            speedX: isStar ? (Math.random() - 0.5) * 0.1 : (Math.random() - 0.5) * 0.05,
+            alpha: Math.random() * 0.5 + 0.3,
+            flicker: Math.random() * 0.02 + 0.005,
+            color: isStar 
+              ? `hsl(${45 + Math.random()*20}, 70%, 70%)`   // warm gold
+              : `hsl(${50 + Math.random()*30}, 85%, 75%)`,  // brighter sparkles
+          });
+        }
+      }
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.shadowColor = '#fffacd';
+        ctx.shadowBlur = 8;
+
+        particles.forEach(p => {
+          // Twinkling alpha
+          const twinkle = Math.sin(Date.now() * p.flicker + p.x) * 0.15;
+          ctx.globalAlpha = Math.min(1, Math.max(0.2, p.alpha + twinkle));
+          ctx.fillStyle = p.color;
+
+          if (p.type === 'sparkle') {
+            // Draw sparkle as a small star (+ shape)
+            ctx.beginPath();
+            for (let i = 0; i < 4; i++) {
+              let angle = i * Math.PI/2;
+              let dx = Math.cos(angle) * p.radius * 1.5;
+              let dy = Math.sin(angle) * p.radius * 1.5;
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p.x + dx, p.y + dy);
+            }
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+            // Center dot
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius * 0.6, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            // Star – simple circle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Move stars downward, sparkles drift slowly
+          p.y += p.speedY;
+          p.x += p.speedX;
+
+          // Wrap around edges
+          if (p.y > height) p.y = 0;
+          if (p.y < 0) p.y = height;
+          if (p.x > width) p.x = 0;
+          if (p.x < 0) p.x = width;
+        });
+
+        ctx.shadowBlur = 0;
+        requestAnimationFrame(drawParticles);
+      }
+
+      window.addEventListener('resize', () => {
+        initParticles();
+      });
+
+      initParticles();
+      drawParticles();
+    })();
+
+    // ==================== STUDENT DATA LOADING ====================
     (function() {
       const studentId = new URLSearchParams(window.location.search).get('id');
       const contentDiv = document.getElementById('content');
@@ -226,7 +388,7 @@
             </div>
             <div class="student-name">${student.B || 'Scholar'}</div>
             <div class="student-message">${student.C || 'Congratulations on your achievement! 🎓'}</div>
-            <button class="download-btn" id="downloadBtn" style="display: none;">⬇ Download Photo</button>
+            <button class="download-btn" id="downloadBtn" style="display: none;">Download Photo</button>
             <div class="footer">ID: ${studentId}</div>
           `;
 

@@ -86,14 +86,14 @@
       fetch('data/student.json')
         .then(r => r.json())
         .then(students => {
-          const student = students.find(s => s.id == studentId);
+          const student = students.find(s => s.A == studentId);
           if (!student) throw new Error('Not found');
           document.getElementById('content').innerHTML = `
             <div class="photo-container">
               <img src="images/${studentId}.jpg" class="photo" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'photo-placeholder\\'>📷 No photo</div>';">
             </div>
-            <div class="name">${student.name}</div>
-            <div class="message">${student.message}</div>
+            <div class="name">${student.B}</div>
+            <div class="message">${student.C}</div>
             <div class="footer">ID: ${studentId}</div>
           `;
         })

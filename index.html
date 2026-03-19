@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Student Profile - The Indian Heights School</title>
+  <title>The Indian Heights School – Student Profile</title>
   <style>
-    /* Reset & base */
     * {
       margin: 0;
       padding: 0;
@@ -13,18 +12,17 @@
     }
 
     body {
-      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-      background: linear-gradient(145deg, #e8eef4 0%, #d0ddea 100%);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: radial-gradient(circle at 30% 30%, #1a2639, #0b0f17);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px;
+      padding: 16px;
       position: relative;
-      overflow-x: hidden;
     }
 
-    /* Subtle star animation canvas – very lightweight */
+    /* Star canvas – covers entire card area, pointer-events: none so buttons remain clickable */
     #starCanvas {
       position: fixed;
       top: 0;
@@ -32,191 +30,196 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
-      opacity: 0.35; /* subtle, not overpowering */
+      z-index: 5;
+      opacity: 0.6;
     }
 
-    /* Main card – clean, premium, with sash accent */
+    /* Main card – premium glass effect */
     .card {
       position: relative;
-      z-index: 2;
-      max-width: 440px;
+      z-index: 10;
+      max-width: 460px;
       width: 100%;
-      background: #ffffff;
-      border-radius: 32px;
-      box-shadow: 0 20px 35px -8px rgba(0, 20, 40, 0.25), 0 5px 10px -3px rgba(0, 0, 0, 0.1);
+      background: rgba(20, 28, 40, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 40px;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 215, 0, 0.2) inset;
       overflow: hidden;
-      transition: transform 0.2s ease;
-      animation: cardFade 0.4s ease-out;
+      animation: rise 0.5s ease-out;
     }
 
-    /* Sash effect: diagonal stripe on top right */
-    .card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 150px;
-      height: 150px;
-      background: linear-gradient(135deg, transparent 50%, #c5a028 50%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* "Hat and Sash" text on the sash */
-    .sash-text {
-      position: absolute;
-      top: 25px;
-      right: 15px;
-      transform: rotate(45deg);
-      font-size: 14px;
-      font-weight: 600;
-      color: #ffffff;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-      letter-spacing: 0.5px;
-      z-index: 3;
-      white-space: nowrap;
-      background: rgba(0,0,0,0.1);
-      padding: 2px 8px;
-      border-radius: 20px;
-      backdrop-filter: blur(2px);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    /* Small graduation cap on the sash */
-    .card::after {
-      content: "🎓";
-      position: absolute;
-      top: 12px;
-      right: 24px;
-      font-size: 28px;
-      color: #ffffff;
-      text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
-      z-index: 2;
-      pointer-events: none;
-      transform: rotate(15deg);
-    }
-
-    @keyframes cardFade {
-      0% { opacity: 0; transform: translateY(12px); }
+    @keyframes rise {
+      0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* School header – rich blue with gold accent */
+    /* Diagonal sash with text and cap */
+    .sash {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 170px;
+      height: 170px;
+      background: linear-gradient(135deg, transparent 50%, #d4af37 50%);
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .sash-text {
+      position: absolute;
+      top: 30px;
+      right: 10px;
+      transform: rotate(45deg);
+      font-size: 16px;
+      font-weight: 700;
+      color: #0b0f17;
+      background: rgba(255,255,240,0.85);
+      padding: 4px 12px;
+      border-radius: 30px;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      white-space: nowrap;
+      z-index: 20;
+    }
+
+    .cap-icon {
+      position: absolute;
+      top: 18px;
+      right: 30px;
+      font-size: 34px;
+      transform: rotate(15deg);
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+      z-index: 20;
+    }
+
+    /* School header */
     .school-header {
-      background: #0b2b4f;  /* deep navy */
-      color: white;
-      padding: 24px 20px 20px;
+      padding: 30px 20px 20px;
       text-align: center;
-      border-bottom: 5px solid #c5a028;
+      border-bottom: 2px solid rgba(212, 175, 55, 0.4);
     }
 
     .school-name {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 2px 5px #00000050;
       line-height: 1.3;
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
     }
 
     .school-address {
       font-size: 14px;
-      opacity: 0.9;
+      color: #d4af37;
+      margin-top: 6px;
       font-weight: 400;
+      letter-spacing: 0.3px;
     }
 
-    /* Photo container – adapts to tall images */
+    /* Photo container – canvas lives above but we'll handle with global canvas */
     .photo-container {
-      margin: 20px 20px 10px;
-      border-radius: 24px;
+      margin: 22px 22px 12px;
+      border-radius: 28px;
       overflow: hidden;
-      background: #f2f2f2;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+      background: #0f121b;
+      box-shadow: 0 15px 25px -8px black;
       display: flex;
       align-items: center;
       justify-content: center;
-      max-height: 60vh;           /* limits height on large screens */
+      max-height: 55vh;
+      border: 2px solid #d4af3740;
     }
 
     .photo {
       width: 100%;
       height: auto;
-      max-height: 60vh;
-      object-fit: contain;        /* ensures full photo is visible */
+      max-height: 55vh;
+      object-fit: contain;
       display: block;
     }
 
     .photo-placeholder {
-      padding: 40px 20px;
-      color: #7a7a7a;
+      color: #aaa;
+      padding: 50px 20px;
       text-align: center;
-      font-size: 16px;
-      background: #f7f7f7;
-      border-radius: 24px;
-      margin: 20px;
+      font-size: 18px;
     }
 
-    /* Student info */
+    /* Student details */
     .student-name {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 800;
       text-align: center;
-      margin: 12px 20px 4px;
-      color: #0b2b4f;
+      margin: 8px 20px 4px;
+      color: #ffffff;
+      text-shadow: 0 3px 8px #00000060;
       word-break: break-word;
-      line-height: 1.3;
     }
 
     .student-message {
-      font-size: 18px;
+      font-size: 20px;
       text-align: center;
       margin: 0 20px 20px;
-      color: #2c3e50;
-      background: #f4f7fc;
-      padding: 18px 16px;
-      border-radius: 40px;
-      font-weight: 400;
-      border-left: 4px solid #c5a028;
-      border-right: 4px solid #c5a028;
+      color: #f0e6d0;
+      background: rgba(0,0,0,0.3);
+      padding: 18px 18px;
+      border-radius: 60px;
+      border: 1px solid #d4af3740;
+      backdrop-filter: blur(4px);
       word-break: break-word;
     }
 
-    /* Footer with ID and subtle sash line */
+    /* Download button */
+    .download-btn {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 0 20px 22px;
+      padding: 16px 10px;
+      background: linear-gradient(145deg, #d4af37, #b68b2c);
+      border: none;
+      border-radius: 50px;
+      color: #0b0f17;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 10px 20px -5px #00000080, 0 0 0 1px #ffecb3 inset;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .download-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 5px 10px -3px black;
+    }
+
     .footer {
       font-size: 15px;
       text-align: center;
-      color: #6b7a8f;
-      padding: 0 20px 22px;
-      letter-spacing: 0.4px;
-      border-top: 2px dashed #c5a028;
-      margin-top: 8px;
-      padding-top: 18px;
+      color: #a0aec0;
+      padding: 0 20px 24px;
     }
 
-    /* Loading & error states */
+    /* Loading/error */
     .loading, .error {
-      color: #0b2b4f;
+      color: white;
       text-align: center;
       padding: 40px 20px;
-      font-size: 18px;
-      background: #ffffff;
-      border-radius: 28px;
-      margin: 20px;
     }
-    .error {
-      color: #b0003a;
-    }
+    .error { color: #ffa07a; }
   </style>
 </head>
 <body>
 
-  <!-- Ultra-light star canvas -->
   <canvas id="starCanvas"></canvas>
 
-  <!-- Main profile card -->
   <div class="card">
-    <!-- "Hat and Sash" text on the sash -->
-    <div class="sash-text">Hat & Sash</div>
+    <!-- Sash elements -->
+    <div class="sash"></div>
+    <div class="sash-text">HAT & SASH</div>
+    <div class="cap-icon">🎓</div>
 
     <!-- School header -->
     <div class="school-header">
@@ -224,14 +227,14 @@
       <div class="school-address">Sector - 23, Dwarka, New Delhi 110077</div>
     </div>
 
+    <!-- Dynamic content -->
     <div id="content">
-      <!-- Dynamic content loaded by JavaScript -->
-      <div class="loading">🎓 Loading profile...</div>
+      <div class="loading">✨ Raising the curtain...</div>
     </div>
   </div>
 
   <script>
-    // ==================== LIGHTWEIGHT STAR RAIN ====================
+    // ==================== STAR RAIN ANIMATION (Lightweight) ====================
     (function() {
       const canvas = document.getElementById('starCanvas');
       const ctx = canvas.getContext('2d');
@@ -244,42 +247,43 @@
         canvas.width = width;
         canvas.height = height;
 
-        // Create very few stars (30-40) for minimal performance impact
-        const starCount = Math.min(40, Math.floor(width * height / 15000));
+        // About 70 stars – enough to feel magical but still light
+        const starCount = Math.min(80, Math.floor((width * height) / 7000));
         stars = [];
         for (let i = 0; i < starCount; i++) {
           stars.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: Math.random() * 2.2 + 0.8,
-            speed: Math.random() * 0.4 + 0.1,
-            alpha: Math.random() * 0.5 + 0.2,
+            radius: Math.random() * 2.8 + 1,
+            speed: Math.random() * 0.5 + 0.2,
+            alpha: Math.random() * 0.5 + 0.3,
+            flicker: Math.random() * 0.02 + 0.01,
           });
         }
       }
 
       function drawStars() {
         ctx.clearRect(0, 0, width, height);
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = '#ffe68f';
-        ctx.shadowBlur = 6;
+        ctx.shadowColor = '#fffacd';
+        ctx.shadowBlur = 8;
         
         stars.forEach(s => {
-          ctx.globalAlpha = s.alpha;
+          ctx.globalAlpha = s.alpha + Math.sin(Date.now() * s.flicker) * 0.1;
+          ctx.fillStyle = '#fff9e6';
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
           ctx.fill();
-          
-          // move down
+
+          // Move downwards
           s.y += s.speed;
-          // reset when out of view
+          // Reset when out of bounds
           if (s.y > height) {
             s.y = 0;
             s.x = Math.random() * width;
           }
         });
-        
-        ctx.shadowBlur = 0; // reset
+
+        ctx.shadowBlur = 0;
         requestAnimationFrame(drawStars);
       }
 
@@ -291,7 +295,7 @@
       drawStars();
     })();
 
-    // ==================== STUDENT DATA LOADING ====================
+    // ==================== STUDENT DATA & PHOTO LOADING ====================
     (function() {
       const studentId = new URLSearchParams(window.location.search).get('id');
       const contentDiv = document.getElementById('content');
@@ -302,30 +306,34 @@
       }
 
       fetch('data/student.json')
-        .then(response => {
-          if (!response.ok) throw new Error('Network response was not ok');
-          return response.json();
-        })
+        .then(r => r.json())
         .then(students => {
           const student = students.find(s => s.A == studentId);
           if (!student) throw new Error('Student not found');
 
+          // Build the base structure (photo container will be filled later)
           contentDiv.innerHTML = `
             <div class="photo-container" id="photoContainer">
-              <div class="loading" style="background: none; padding: 30px;">📸 Loading photo...</div>
+              <div class="loading" style="background: none;">✨ Loading photo...</div>
             </div>
-            <div class="student-name">${student.B || 'Student'}</div>
+            <div class="student-name">${student.B || 'Scholar'}</div>
             <div class="student-message">${student.C || 'Congratulations on your achievement! 🎓'}</div>
+            <button class="download-btn" id="downloadBtn" style="display: none;">⬇ Download Photo</button>
             <div class="footer">ID: ${studentId}</div>
           `;
 
-          const extensions = ['JPG', 'jpg', 'PNG', 'png'];
           const photoContainer = document.getElementById('photoContainer');
+          const downloadBtn = document.getElementById('downloadBtn');
+          const extensions = ['JPG', 'jpg', 'PNG', 'png'];
+          let loadedImageSrc = null;
 
           function tryImage(ext) {
             return new Promise((resolve, reject) => {
               const img = new Image();
-              img.onload = () => resolve(img);
+              img.onload = () => {
+                loadedImageSrc = img.src; // store for download
+                resolve(img);
+              };
               img.onerror = reject;
               img.src = `images/${studentId}.${ext}`;
             });
@@ -341,14 +349,31 @@
               img.className = 'photo';
               photoContainer.innerHTML = '';
               photoContainer.appendChild(img);
+              downloadBtn.style.display = 'block'; // show download button
             })
             .catch(() => {
               photoContainer.innerHTML = '<div class="photo-placeholder">📷 No photo available</div>';
+              downloadBtn.style.display = 'none';
             });
+
+          // Download button functionality
+          downloadBtn.addEventListener('click', function() {
+            if (loadedImageSrc) {
+              const a = document.createElement('a');
+              a.href = loadedImageSrc;
+              a.download = `${studentId}_profile.jpg`; // force download name
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            } else {
+              alert('Photo not ready or unavailable.');
+            }
+          });
+
         })
         .catch(err => {
           console.error(err);
-          contentDiv.innerHTML = '<div class="error">❌ Student not found or data error</div>';
+          contentDiv.innerHTML = '<div class="error">❌ Student not found</div>';
         });
     })();
   </script>

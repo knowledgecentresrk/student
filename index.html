@@ -17,7 +17,7 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: #faf7f2;  /* soft cream */
+      background: #fef9e7;  /* soft cream */
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -35,7 +35,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: repeating-linear-gradient(45deg, rgba(201, 160, 61, 0.02) 0px, rgba(201, 160, 61, 0.02) 20px, transparent 20px, transparent 40px);
+      background-image: repeating-linear-gradient(45deg, rgba(230, 180, 34, 0.02) 0px, rgba(230, 180, 34, 0.02) 20px, transparent 20px, transparent 40px);
       pointer-events: none;
       z-index: 1;
     }
@@ -52,7 +52,7 @@
       opacity: 0.6;
     }
 
-    /* Main card – deep navy, layered shadow, soft corners */
+    /* Main card – deep emerald, layered shadow, soft corners */
     .card {
       position: relative;
       z-index: 10;
@@ -60,9 +60,9 @@
       width: 100%;
       background: #ffffff;
       border-radius: 28px;
-      box-shadow: 0 25px 40px -12px rgba(10, 25, 47, 0.3),
+      box-shadow: 0 25px 40px -12px rgba(10, 60, 50, 0.3),
                   0 10px 20px -8px rgba(0, 0, 0, 0.15),
-                  0 0 0 1px rgba(201, 160, 61, 0.3) inset;
+                  0 0 0 1px rgba(230, 180, 34, 0.3) inset;
       overflow: hidden;
       animation: fadeUp 0.5s ease;
       transition: transform 0.2s;
@@ -76,13 +76,13 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* School header – deep navy */
+    /* School header – deep emerald */
     .school-header {
-      background: #0a192f;  /* deep navy */
+      background: #0a3b3a;  /* deep emerald */
       color: white;
       padding: 24px 20px 18px;
       text-align: center;
-      border-bottom: 4px solid #c9a03d;
+      border-bottom: 4px solid #e6b422; /* warm peach */
     }
 
     .school-name {
@@ -97,18 +97,18 @@
     .school-address {
       font-size: 13px;
       font-weight: 300;
-      color: #ddcba4;
+      color: #f7d9a0;
       letter-spacing: 0.3px;
     }
 
     /* "Hat and Sash" ribbon – enhanced with 3D fold */
     .ribbon {
-      background: linear-gradient(145deg, #e9dbbd, #dac29c);
+      background: linear-gradient(145deg, #f7e5b9, #e6b422);
       padding: 12px 16px;
       text-align: center;
       position: relative;
-      border-bottom: 2px solid #c9a03d;
-      border-top: 2px solid #c9a03d20;
+      border-bottom: 2px solid #e6b422;
+      border-top: 2px solid #e6b42220;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
     .ribbon::before {
@@ -118,14 +118,14 @@
       left: 0;
       width: 100%;
       height: 5px;
-      background: linear-gradient(135deg, transparent 30%, #c9a03d 50%, transparent 70%);
+      background: linear-gradient(135deg, transparent 30%, #e6b422 50%, transparent 70%);
       opacity: 0.4;
     }
     .ribbon span {
       font-family: 'Playfair Display', serif;
       font-size: 20px;
       font-weight: 600;
-      color: #0a192f;
+      color: #0a3b3a;
       background: rgba(255,255,240,0.5);
       padding: 5px 28px;
       border-radius: 40px;
@@ -137,27 +137,52 @@
     .ribbon span::before {
       content: "🎓 ";
       font-size: 22px;
-      filter: drop-shadow(0 2px 2px #c9a03d);
+      filter: drop-shadow(0 2px 2px #e6b422);
     }
     .ribbon span::after {
       content: " 🎓";
       font-size: 22px;
-      filter: drop-shadow(0 2px 2px #c9a03d);
+      filter: drop-shadow(0 2px 2px #e6b422);
     }
 
-    /* Photo container – polaroid‑style frame */
+    /* Photo container – beautiful frame */
     .photo-container {
       margin: 18px 22px 10px;
       border-radius: 20px;
       overflow: hidden;
       background: #ffffff;
-      box-shadow: 0 12px 22px -10px rgba(10, 25, 47, 0.25);
+      box-shadow: 0 12px 22px -10px rgba(10, 60, 50, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
       max-height: 48vh;
-      border: 4px solid #ffffff;
-      outline: 1px solid #c9a03d40;
+      border: 6px solid #ffffff;
+      outline: 2px solid #e6b422;  /* gold frame */
+      outline-offset: 2px;
+      position: relative;
+    }
+    /* Decorative corner accents (optional) */
+    .photo-container::before,
+    .photo-container::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #e6b422;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .photo-container::before {
+      top: -4px;
+      left: -4px;
+      border-right: none;
+      border-bottom: none;
+    }
+    .photo-container::after {
+      bottom: -4px;
+      right: -4px;
+      border-left: none;
+      border-top: none;
     }
 
     .photo {
@@ -182,7 +207,7 @@
       font-weight: 700;
       text-align: center;
       margin: 8px 22px 2px;
-      color: #0a192f;
+      color: #0a3b3a;
       word-break: break-word;
       line-height: 1.2;
     }
@@ -195,8 +220,8 @@
       background: #f8f4ec;
       padding: 14px 16px;
       border-radius: 50px;
-      border-left: 4px solid #c9a03d;
-      border-right: 4px solid #c9a03d;
+      border-left: 4px solid #e6b422;
+      border-right: 4px solid #e6b422;
       font-weight: 400;
       word-break: break-word;
       line-height: 1.5;
@@ -208,14 +233,14 @@
       width: calc(100% - 44px);
       margin: 0 22px 18px;
       padding: 16px 10px;
-      background: linear-gradient(145deg, #c9a03d, #b2892b);
+      background: linear-gradient(145deg, #e6b422, #d19b1a);
       border: none;
       border-radius: 50px;
-      color: #0a192f;
+      color: #0a3b3a;
       font-size: 20px;
       font-weight: 600;
       text-align: center;
-      box-shadow: 0 10px 16px -6px #8f6f2d80, 0 2px 0 0 #f3d48b inset;
+      box-shadow: 0 10px 16px -6px #b38a2d80, 0 2px 0 0 #f7e5b9 inset;
       transition: transform 0.15s, box-shadow 0.15s;
       cursor: pointer;
       border: none;
@@ -223,7 +248,7 @@
     }
     .download-btn:active {
       transform: scale(0.98);
-      box-shadow: 0 5px 10px -3px #6b4f20;
+      box-shadow: 0 5px 10px -3px #8f6f2d;
     }
     /* Icon via pseudo-element */
     .download-btn::before {
@@ -245,7 +270,7 @@
     .loading, .error {
       text-align: center;
       padding: 40px 16px;
-      color: #0a192f;
+      color: #0a3b3a;
       font-size: 16px;
     }
     .error { color: #b34a4a; }
@@ -302,8 +327,8 @@
             alpha: Math.random() * 0.5 + 0.3,
             flicker: Math.random() * 0.02 + 0.005,
             color: isStar 
-              ? `hsl(${45 + Math.random()*20}, 70%, 70%)`   // warm gold
-              : `hsl(${50 + Math.random()*30}, 85%, 75%)`,  // brighter sparkles
+              ? `hsl(${45 + Math.random()*20}, 80%, 70%)`   // warm gold
+              : `hsl(${50 + Math.random()*30}, 90%, 75%)`,  // brighter sparkles
           });
         }
       }

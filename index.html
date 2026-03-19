@@ -83,7 +83,7 @@
     if (!studentId) {
       document.getElementById('content').innerHTML = '<div class="error">Missing ID</div>';
     } else {
-      fetch('data/students.json')
+      fetch('data/student.json')
         .then(r => r.json())
         .then(students => {
           const student = students.find(s => s.id == studentId);

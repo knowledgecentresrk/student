@@ -7,302 +7,90 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;overflow-x:hidden}
-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
-.main{position:relative;z-index:2;text-align:center;padding:15px}
-h1{font-size:clamp(20px,5vw,30px);animation:glow 2s infinite alternate}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;text-align:center}
+.main{padding:15px}
+h1{font-size:clamp(20px,5vw,30px)}
 h2{font-size:clamp(16px,4vw,22px);color:#ffd700}
-@keyframes glow{from{text-shadow:0 0 10px #fff}to{text-shadow:0 0 25px #00e6ff}}
-
-.loader{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  background:#000;z-index:5;flex-direction:column;
-}
-
-.loader-text{
-  margin-top:15px;
-  font-size:22px;
-  letter-spacing:3px;
-  font-weight:bold;
-  animation:pulse 1.5s infinite;
-}
-
-.spinner{
-  width:60px;
-  height:60px;
-  border:6px solid rgba(255,255,255,0.2);
-  border-top:6px solid #00e6ff;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-  0%{transform:rotate(0deg)}
-  100%{transform:rotate(360deg)}
-}
-
-@keyframes pulse{
-  0%{opacity:0.5}
-  50%{opacity:1}
-  100%{opacity:0.5}
-}
-
-.card{margin-top:15px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:10px;box-shadow:0 15px 40px rgba(0,0,0,0.5);max-width:95%;margin:auto}
-.img-wrapper{position:relative;border-radius:15px;overflow:hidden;border:3px solid rgba(255,255,255,0.3)}
-img{width:100%;height:auto;max-height:80vh;object-fit:contain;background:#000}
-.caption{margin-top:10px;font-size:clamp(18px,4.5vw,26px);font-weight:600;padding:10px}
-.controls{margin-top:10px}
-button,a.download{border:none;padding:10px 14px;margin:5px;border-radius:10px;font-size:14px;cursor:pointer;background:linear-gradient(45deg,#ff512f,#dd2476);color:#fff;text-decoration:none}
-button:disabled{opacity:0.4;cursor:not-allowed}
-button:hover:not(:disabled),a.download:hover{transform:scale(1.1)}
+.card{margin-top:15px;background:rgba(255,255,255,0.1);border-radius:15px;padding:10px;max-width:95%;margin:auto}
+img{width:100%;max-height:80vh;object-fit:contain;background:#000}
+.caption{margin-top:10px;font-size:clamp(18px,4.5vw,26px);font-weight:600}
+button,a{padding:10px;margin:5px;border:none;border-radius:8px;background:#ff512f;color:#fff;text-decoration:none}
+button:disabled{opacity:0.4}
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader">
-  <div class="spinner"></div>
-  <div class="loader-text">TIHS</div>
-</div>
-<canvas id="stars"></canvas>
-
-<div class="main" style="display:none" id="mainContent">
+<div class="main">
 <h1>The Indian Heights School</h1>
 <h2>My First Day</h2>
 
 <div class="card">
-  <div class="img-wrapper">
-    <img id="photo" src="" />
-  </div>
+  <img id="photo" />
   <div class="caption" id="caption"></div>
-  <div class="controls">
-    <button id="prevBtn" onclick="prevPhoto()">⬅ Prev</button>
-    <button id="nextBtn" onclick="nextPhoto()">Next ➡</button><br>
-    <a id="downloadBtn" class="download" download>⬇ Download</a>
+  <div>
+    <button id="prevBtn" onclick="prevPhoto()">Prev</button>
+    <button id="nextBtn" onclick="nextPhoto()">Next</button><br>
+    <a id="downloadBtn" download>Download</a>
   </div>
 </div>
 </div>
 
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const folderId = urlParams.get('id') || '1';
+const folderId = new URLSearchParams(window.location.search).get('id') || '1';
 
 let images = [];
 let captions = [];
 let currentIndex = 0;
 
-function checkImage(path) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.src = path;
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-  });
+function tryLoad(src, success){
+  const img = new Image();
+  img.src = src;
+  img.onload = ()=>success(src);
 }
 
-function loadImages() {
-  const groupPathJPG = `images/${folderId}/group.JPG`;
-  const groupPathjpg = `images/${folderId}/group.jpg`;
+// LOAD GROUP FIRST (NO WAITING SYSTEM)
+tryLoad(`images/${folderId}/group.JPG`, (src)=>{
+  initGallery(src);
+});
 
-  // TRY BOTH FORMATS instantly (no waiting)
-  const imgTest = new Image();
-  imgTest.src = groupPathJPG;
+tryLoad(`images/${folderId}/group.jpg`, (src)=>{
+  if(images.length===0) initGallery(src);
+});
 
-  imgTest.onload = () => {
-    startGallery(groupPathJPG);
-  };
-
-  imgTest.onerror = () => {
-    const imgTest2 = new Image();
-    imgTest2.src = groupPathjpg;
-
-    imgTest2.onload = () => {
-      startGallery(groupPathjpg);
-    };
-
-    imgTest2.onerror = () => {
-      document.getElementById('loader').innerHTML = "No Photos Found";
-    };
-  };
-}
-
-function startGallery(firstImage) {
-  images.push(firstImage);
+function initGallery(first){
+  images.push(first);
   captions.push("The first page of our wonderful school life");
-
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('mainContent').style.display = 'block';
-
   showPhoto();
 
-  // LOAD singles in background (no blocking)
-  let i = 1;
-
-  function loadNext() {
-    const pathJPG = `images/${folderId}/single${i}.JPG`;
-    const pathjpg = `images/${folderId}/single${i}.jpg`;
-
-    const img = new Image();
-    img.src = pathJPG;
-
-    img.onload = () => {
-      images.push(pathJPG);
+  // LOAD SINGLE IMAGES IN BACKGROUND
+  let i=1;
+  function loadNext(){
+    tryLoad(`images/${folderId}/single${i}.JPG`, (src)=>{
+      images.push(src);
       captions.push("A beautiful start to a bright journey");
-      i++;
-      loadNext();
-    };
+      i++; loadNext();
+    });
 
-    img.onerror = () => {
-      const img2 = new Image();
-      img2.src = pathjpg;
-
-      img2.onload = () => {
-        images.push(pathjpg);
-        captions.push("A beautiful start to a bright journey");
-        i++;
-        loadNext();
-      };
-
-      img2.onerror = () => {
-        return; // stop when no more images
-      };/group.JPG`;
-
-  if (await checkImage(groupPath)) {
-    images.push(groupPath);
-    captions.push("The first page of our wonderful school life");
-  }
-
-  // SHOW UI IMMEDIATELY after first image
-  if (images.length > 0) {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    showPhoto();
-  }
-
-  // LOAD remaining images in background (FAST UX)
-  for (let i = 1; i <= 50; i++) {
-    let path = `images/${folderId}/single${i}.JPG`;
-    if (await checkImage(path)) {
-      images.push(path);
+    tryLoad(`images/${folderId}/single${i}.jpg`, (src)=>{
+      images.push(src);
       captions.push("A beautiful start to a bright journey");
-    } else {
-      break; // stop when no more images
-    }
+      i++; loadNext();
+    });
   }
-
-  // if nothing found at all
-  if (images.length === 0) {
-    document.getElementById('loader').innerHTML = "No Photos Found";
-  }
-}/group.JPG`;
-  const promises = [];
-
-  // check group fast
-  promises.push(checkImage(groupPath).then(exists => {
-    if (exists) {
-      images.push(groupPath);
-      captions.push("The first page of our wonderful school life");
-    }
-  }));
-
-  // check singles in parallel (FAST)
-  for (let i = 1; i <= 50; i++) {
-    let path = `images/${folderId}/single${i}.JPG`;
-    promises.push(checkImage(path).then(exists => {
-      if (exists) {
-        images.push(path);
-        captions.push("A beautiful start to a bright journey");
-      }
-    }));
-  }
-
-  await Promise.all(promises);
-
-  // sort images so group always first, then singles in order
-  images.sort((a, b) => {
-    if (a.includes('group')) return -1;
-    if (b.includes('group')) return 1;
-    return a.localeCompare(b, undefined, { numeric: true });
-  });
-
-  captions = images.map(img =>
-    img.includes('group')
-      ? "The first page of our wonderful school life"
-      : "A beautiful start to a bright journey"
-  );
-
-  // if no images found
-  if (images.length === 0) {
-    document.getElementById('loader').innerHTML = "No Photos Found";
-    return;
-  }
-
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('mainContent').style.display = 'block';
-
-  showPhoto();
-}/group.JPG`)) {
-    images.push(`images/${folderId}/group.JPG`);
-    captions.push("The first page of our wonderful school life");
-  }
-
-  // Load singles
-  for (let i = 1; i <= 50; i++) {
-    let path = `images/${folderId}/single${i}.JPG`;
-    if (await checkImage(path)) {
-      images.push(path);
-      captions.push("A beautiful start to a bright journey");
-    }
-  }
-
-  // Show UI after loading
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('mainContent').style.display = 'block';
-
-  showPhoto();
+  loadNext();
 }
 
-function showPhoto() {
-  const img = document.getElementById('photo');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const caption = document.getElementById('caption');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-
-  img.src = images[currentIndex];
-  downloadBtn.href = images[currentIndex];
+function showPhoto(){
+  if(images.length===0) return;
+  photo.src = images[currentIndex];
   caption.innerText = captions[currentIndex];
-
-  prevBtn.disabled = currentIndex === 0;
-  nextBtn.disabled = currentIndex === images.length - 1;
+  downloadBtn.href = images[currentIndex];
+  prevBtn.disabled = currentIndex===0;
+  nextBtn.disabled = currentIndex===images.length-1;
 }
 
-function nextPhoto(){if(currentIndex<images.length-1){currentIndex++;showPhoto();}}
-function prevPhoto(){if(currentIndex>0){currentIndex--;showPhoto();}}
-
-loadImages();
-
-// STAR ANIMATION
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars=[];
-for(let i=0;i<120;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2,s:Math.random()*1+0.3});}
-
-function drawStars(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="white";
-  stars.forEach(star=>{
-    ctx.beginPath();ctx.arc(star.x,star.y,star.r,0,Math.PI*2);ctx.fill();
-    star.y+=star.s;
-    if(star.y>canvas.height){star.y=0;star.x=Math.random()*canvas.width;}
-  });
-  requestAnimationFrame(drawStars);
-}
-
-drawStars();
+function nextPhoto(){ if(currentIndex<images.length-1){currentIndex++;showPhoto();}}
+function prevPhoto(){ if(currentIndex>0){currentIndex--;showPhoto();}}
 </script>
 
 </body>

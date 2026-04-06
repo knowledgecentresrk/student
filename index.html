@@ -101,7 +101,37 @@ function checkImage(path) {
 }
 
 async function loadImages() {
+  // QUICK LOAD: try group first (fast)
   const groupPath = `images/${folderId}/group.JPG`;
+
+  if (await checkImage(groupPath)) {
+    images.push(groupPath);
+    captions.push("The first page of our wonderful school life");
+  }
+
+  // SHOW UI IMMEDIATELY after first image
+  if (images.length > 0) {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    showPhoto();
+  }
+
+  // LOAD remaining images in background (FAST UX)
+  for (let i = 1; i <= 50; i++) {
+    let path = `images/${folderId}/single${i}.JPG`;
+    if (await checkImage(path)) {
+      images.push(path);
+      captions.push("A beautiful start to a bright journey");
+    } else {
+      break; // stop when no more images
+    }
+  }
+
+  // if nothing found at all
+  if (images.length === 0) {
+    document.getElementById('loader').innerHTML = "No Photos Found";
+  }
+}/group.JPG`;
   const promises = [];
 
   // check group fast

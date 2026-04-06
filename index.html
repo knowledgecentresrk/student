@@ -15,7 +15,7 @@
 body {
   font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #fff;
+  color: #eef2f5;
   text-align: center;
   overflow-x: hidden;
   min-height: 100vh;
@@ -40,32 +40,20 @@ canvas {
 }
 
 h1 {
-  font-size: clamp(1.4rem, 6vw, 2rem);
-  letter-spacing: 1px;
-  animation: glow 2.5s infinite alternate;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
   font-weight: 600;
-  background: linear-gradient(135deg, #ffffff, #b9f3ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  text-shadow: none;
-}
-
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 2px rgba(255,255,255,0.3);
-  }
-  100% {
-    text-shadow: 0 0 18px #00e6ff, 0 0 8px #00a3cc;
-  }
+  letter-spacing: 1px;
+  color: #eef2f5;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  margin-bottom: 0.25rem;
 }
 
 h2 {
-  font-size: clamp(1rem, 4.5vw, 1.6rem);
-  color: #ffecb3;
+  font-size: clamp(1rem, 4.5vw, 1.5rem);
   font-weight: 400;
+  color: #cbd8e6;
   margin-top: 0.2rem;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   backdrop-filter: blur(2px);
   display: inline-block;
   padding: 0 0.5rem;
@@ -78,7 +66,7 @@ h2 {
   backdrop-filter: blur(16px);
   border-radius: 2rem;
   padding: 1rem;
-  border: 1px solid rgba(255,255,240,0.2);
+  border: 1px solid rgba(255,255,240,0.15);
   box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
   transition: all 0.2s ease;
 }
@@ -105,7 +93,6 @@ img {
   transition: transform 0.2s ease;
 }
 
-/* elegant loader overlay */
 #imgLoader {
   position: absolute;
   top: 0;
@@ -119,15 +106,14 @@ img {
   backdrop-filter: blur(6px);
   z-index: 12;
   border-radius: 1.2rem;
-  transition: opacity 0.2s;
 }
 
 .spinner {
   width: 44px;
   height: 44px;
-  border: 4px solid rgba(255, 215, 0, 0.3);
-  border-top: 4px solid #ffd966;
-  border-right: 4px solid #ffaa33;
+  border: 4px solid rgba(200, 220, 240, 0.3);
+  border-top: 4px solid #9bb7d4;
+  border-right: 4px solid #7f9fbf;
   border-radius: 50%;
   animation: spin 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
 }
@@ -137,14 +123,13 @@ img {
   100% { transform: rotate(360deg); }
 }
 
-/* elegant shine animation */
 .shine {
   position: absolute;
   top: 0;
   left: -80%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255, 245, 200, 0.35), transparent);
+  background: linear-gradient(120deg, transparent, rgba(255, 245, 220, 0.2), transparent);
   transform: skewX(-20deg);
   animation: shimmer 4.5s infinite;
   pointer-events: none;
@@ -158,14 +143,12 @@ img {
 
 .caption {
   margin-top: 1rem;
-  font-size: clamp(1.1rem, 5vw, 1.7rem);
-  font-weight: 600;
-  background: linear-gradient(120deg, #fff2d7, #ffe6b3);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+  font-size: clamp(1.1rem, 5vw, 1.6rem);
+  font-weight: 500;
+  color: #f0f4f8;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   padding: 0.3rem;
+  letter-spacing: 0.3px;
 }
 
 .button-group {
@@ -182,19 +165,18 @@ button, .download-btn {
   font-weight: 600;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(115deg, #ff7e5e, #feb47b);
-  color: #1e2a32;
+  background: linear-gradient(115deg, #5d7b93, #3a5c74);
+  color: #f0f4f8;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
   font-family: inherit;
   letter-spacing: 0.5px;
-  backdrop-filter: blur(2px);
 }
 
 button:active { transform: scale(0.96); }
 button:hover:not(:disabled) {
-  background: linear-gradient(115deg, #ff9068, #fdbb7a);
+  background: linear-gradient(115deg, #6e8faa, #4a6f8a);
   transform: translateY(-2px);
   box-shadow: 0 12px 20px rgba(0,0,0,0.3);
 }
@@ -203,27 +185,25 @@ button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
-  background: #5f6c70;
+  background: #4a5f6e;
   box-shadow: none;
 }
 
 .download-btn {
-  background: linear-gradient(115deg, #2b5876, #1e3c4c);
-  color: #f9f3e2;
+  background: linear-gradient(115deg, #2b4f66, #1e3e50);
   text-decoration: none;
   display: inline-block;
-  padding: 0.7rem 2rem;
 }
 
 .download-btn:hover {
-  background: linear-gradient(115deg, #3c6e8f, #225064);
+  background: linear-gradient(115deg, #366b87, #234e64);
   transform: translateY(-2px);
 }
 
 .status-note {
   margin-top: 0.6rem;
   font-size: 0.75rem;
-  color: #cdedff;
+  color: #bdd4e8;
   opacity: 0.9;
 }
 
@@ -239,8 +219,8 @@ button:disabled {
 <canvas id="stars"></canvas>
 
 <div class="main">
-  <h1>✨ The Indian Heights School ✨</h1>
-  <h2>📖 My First Day · A Forever Memory</h2>
+  <h1>The Indian Heights School</h1>
+  <h2>My First Day · A Forever Memory</h2>
 
   <div class="card">
     <div class="img-wrapper">
@@ -256,7 +236,7 @@ button:disabled {
       <button id="nextBtn" aria-label="Next photo">Next ▶</button>
     </div>
     <div>
-      <a id="downloadBtn" class="download-btn" download>💾 Save Moment</a>
+      <a id="downloadBtn" class="download-btn" download>Save Moment</a>
     </div>
     <div class="status-note" id="infoMessage"></div>
   </div>
@@ -264,7 +244,7 @@ button:disabled {
 
 <script>
   (function() {
-    // ----- DOM elements -----
+    // DOM elements
     const canvas = document.getElementById('stars');
     const photo = document.getElementById('photo');
     const captionEl = document.getElementById('caption');
@@ -274,109 +254,82 @@ button:disabled {
     const loaderDiv = document.getElementById('imgLoader');
     const infoMsg = document.getElementById('infoMessage');
 
-    // ----- data storage -----
-    let images = [];      // array of image URLs
-    let captions = [];    // parallel captions
+    // Data
+    let images = [];
+    let captions = [];
     let currentIndex = 0;
-    let isLoadingComplete = false;    // flag for background loading status
-    let groupLoaded = false;
-    let scanningActive = true;         // prevent duplicate group calls
-    
-    // get folder ID from URL (default = '1')
+    let isLoadingComplete = false;
+    let isGroupAttempted = false;
+
     const urlParams = new URLSearchParams(window.location.search);
     const folderId = urlParams.get('id') || '1';
     const basePath = `images/${folderId}`;
-    
-    // Helper: update navigation buttons state based on current index & total images
+
     function updateButtonsState() {
-      if (!prevBtn || !nextBtn) return;
       const total = images.length;
       prevBtn.disabled = (currentIndex === 0 || total === 0);
       nextBtn.disabled = (currentIndex === total - 1 || total === 0);
       
-      // show subtle info if no images at all
       if (total === 0 && !isLoadingComplete) {
-        infoMsg.innerText = "✨ scanning for memories... ✨";
+        infoMsg.innerText = "Scanning for memories...";
       } else if (total === 0 && isLoadingComplete) {
-        infoMsg.innerText = "📸 No photos found. Check folder id or add images: single1.JPG, group.JPG";
+        infoMsg.innerText = "No photos found. Check folder id or add single1.JPG, group.JPG";
       } else {
-        infoMsg.innerText = `📷 ${currentIndex+1} of ${total} · cherish the journey`;
+        infoMsg.innerText = `Photo ${currentIndex+1} of ${total} · cherish the journey`;
       }
     }
-    
-    // update download link and caption
+
     function updateDisplay() {
       if (!images.length) return;
       const currentSrc = images[currentIndex];
       const currentCaption = captions[currentIndex] || "A beautiful start";
       captionEl.innerText = currentCaption;
-      if (downloadBtn) downloadBtn.href = currentSrc;
+      downloadBtn.href = currentSrc;
       
-      // show loader while new image loads (handles crossfade)
       if (loaderDiv) loaderDiv.style.display = 'flex';
       
-      // preload image to handle spinner hiding properly
       const tempImg = new Image();
       tempImg.onload = () => {
         photo.src = currentSrc;
-        // hide loader after setting source (ensure onload on photo)
       };
       tempImg.onerror = () => {
-        // if image fails, still try to show but hide loader
         photo.src = currentSrc;
         loaderDiv.style.display = 'none';
-        infoMsg.innerText = "⚠️ Image couldn't load, but try next/prev";
+        infoMsg.innerText = "Image couldn't load, but you can try next/prev";
       };
       tempImg.src = currentSrc;
     }
-    
-    // When photo actually finishes loading, hide loader
+
     photo.onload = () => {
       if (loaderDiv) loaderDiv.style.display = 'none';
     };
     photo.onerror = () => {
       if (loaderDiv) loaderDiv.style.display = 'none';
-      infoMsg.innerText = "⚠️ Image failed, but navigation may recover";
+      infoMsg.innerText = "Image failed to load, navigation may recover";
     };
-    
-    // core function: add image to gallery and refresh UI navigation
+
     function addImageToGallery(src, captionText) {
-      if (!src) return false;
-      // avoid duplicate same url (just in case)
-      if (images.includes(src)) return false;
+      if (!src || images.includes(src)) return false;
       images.push(src);
       captions.push(captionText);
       updateButtonsState();
       return true;
     }
-    
-    // ----- Async image discovery: load single1, then sequential singles, then group -----
-    let singleCounter = 1;
-    let isGroupAttempted = false;
-    
-    // try loading a specific single image (by number)
+
     function attemptSingleImage(num, onSuccess, onFail) {
       const imgUrl = `${basePath}/single${num}.JPG`;
       const testImg = new Image();
-      testImg.onload = () => {
-        onSuccess(imgUrl);
-      };
+      testImg.onload = () => { onSuccess(imgUrl); };
       testImg.onerror = () => {
-        // also try lowercase .jpg as fallback (case-insensitive servers)
         const fallbackUrl = `${basePath}/single${num}.jpg`;
         const fallbackImg = new Image();
-        fallbackImg.onload = () => {
-          onSuccess(fallbackUrl);
-        };
-        fallbackImg.onerror = () => {
-          onFail();
-        };
+        fallbackImg.onload = () => { onSuccess(fallbackUrl); };
+        fallbackImg.onerror = () => { onFail(); };
         fallbackImg.src = fallbackUrl;
       };
       testImg.src = imgUrl;
     }
-    
-    // load group image (group.JPG / group.jpg)
+
     function loadGroupImage() {
       if (isGroupAttempted) return;
       isGroupAttempted = true;
@@ -386,36 +339,33 @@ button:disabled {
       const tryGroup = (url, fallbackUrl) => {
         const imgTest = new Image();
         imgTest.onload = () => {
-          addImageToGallery(url, "🎒 The first page of our wonderful school life 🌟");
+          addImageToGallery(url, "The first page of our wonderful school life");
           updateButtonsState();
           if (images.length > 0 && currentIndex === 0 && images.length === 1) {
-            // if only group exists and no singles, make sure it's displayed
-            if (photo.src !== url) {
-              showCurrentPhoto();
-            }
+            if (photo.src !== url) updateDisplay();
           }
-          infoMsg.innerText = `✨ Loaded ${images.length} memory (group included) ✨`;
+          infoMsg.innerText = `Loaded ${images.length} memory (group included)`;
           isLoadingComplete = true;
         };
         imgTest.onerror = () => {
           if (fallbackUrl) {
             const fallbackTest = new Image();
             fallbackTest.onload = () => {
-              addImageToGallery(fallbackUrl, "🎒 The first page of our wonderful school life 🌟");
+              addImageToGallery(fallbackUrl, "The first page of our wonderful school life");
               updateButtonsState();
               isLoadingComplete = true;
-              if (images.length === 0) infoMsg.innerText = "📭 No group image found, but you can still navigate singles.";
-              else showCurrentPhoto();
+              if (images.length === 0) infoMsg.innerText = "No group image found, but you can still navigate singles.";
+              else updateDisplay();
             };
             fallbackTest.onerror = () => {
               isLoadingComplete = true;
-              if (images.length === 0) infoMsg.innerText = "📭 No memories found. Please check folder id and files (single1.JPG, group.JPG)";
+              if (images.length === 0) infoMsg.innerText = "No memories found. Please check folder id and files (single1.JPG, group.JPG)";
               updateButtonsState();
             };
             fallbackTest.src = fallbackUrl;
           } else {
             isLoadingComplete = true;
-            if (images.length === 0) infoMsg.innerText = "📭 No group image found. Only singles may exist.";
+            if (images.length === 0) infoMsg.innerText = "No group image found. Singles may exist.";
             updateButtonsState();
           }
         };
@@ -423,27 +373,22 @@ button:disabled {
       };
       tryGroup(groupUrlJpg, groupUrlLower);
     }
-    
-    // sequential single image loader with recursive style but safe
+
     function loadSinglesSequential(startNum) {
       let currentNum = startNum;
       
       function loadNextSingle() {
         attemptSingleImage(currentNum, 
           (successUrl) => {
-            // add single image with caption
-            addImageToGallery(successUrl, "🌸 A beautiful start to a bright journey 🌸");
+            addImageToGallery(successUrl, "A beautiful start to a bright journey");
             updateButtonsState();
-            // If this is the very first image and we haven't shown anything yet
             if (images.length === 1 && currentIndex === 0 && photo.src !== successUrl) {
-              showCurrentPhoto();
+              updateDisplay();
             }
-            // move to next number
             currentNum++;
-            loadNextSingle();   // try next single
+            loadNextSingle();
           },
           () => {
-            // no more singles -> load group
             if (!isGroupAttempted) {
               loadGroupImage();
             } else {
@@ -454,53 +399,40 @@ button:disabled {
           }
         );
       }
-      
       loadNextSingle();
     }
-    
-    // initial load: try single1 first, then cascade
+
     function initializeGallery() {
-      // clear any previous
       images = [];
       captions = [];
       currentIndex = 0;
       isGroupAttempted = false;
       isLoadingComplete = false;
-      singleCounter = 1;
       
-      // start with single1 attempt
       attemptSingleImage(1, 
         (firstUrl) => {
-          addImageToGallery(firstUrl, "🌸 A beautiful start to a bright journey 🌸");
-          // show the very first image immediately
-          showCurrentPhoto();
-          // then start loading remaining singles (from 2 upwards)
+          addImageToGallery(firstUrl, "A beautiful start to a bright journey");
+          updateDisplay();
           loadSinglesSequential(2);
         },
         () => {
-          // single1 missing -> try group directly, also maybe there is no singles at all
           if (!isGroupAttempted) {
             loadGroupImage();
-            // after group loaded, if group exists -> show; else empty
-            // also attempt to see if any other singles exist? but we can try scanning singles from 1 again? Actually we already failed single1.
-            // still try from single2 onward? For completeness, maybe user has single2 but no single1? Unlikely but let's be robust.
-            // attempt additional singles from index 2 but careful with recursion
             let altCounter = 2;
             function loadAltSingles() {
               attemptSingleImage(altCounter,
                 (altUrl) => {
-                  addImageToGallery(altUrl, "🌸 A beautiful start to a bright journey 🌸");
+                  addImageToGallery(altUrl, "A beautiful start to a bright journey");
                   updateButtonsState();
                   altCounter++;
                   loadAltSingles();
                 },
                 () => {
-                  // no more alt singles
-                  if (!isGroupAttempted) loadGroupImage(); // already called above but prevent double
+                  if (!isGroupAttempted) loadGroupImage();
                   else {
                     isLoadingComplete = true;
                     updateButtonsState();
-                    if(images.length===0) infoMsg.innerText = "📸 No memories found. Add single1.JPG or group.JPG";
+                    if(images.length===0) infoMsg.innerText = "No memories found. Add single1.JPG or group.JPG";
                   }
                 }
               );
@@ -510,12 +442,11 @@ button:disabled {
         }
       );
     }
-    
-    // force show current indexed image with loader handling
+
     function showCurrentPhoto() {
       if (!images.length) {
         if (loaderDiv) loaderDiv.style.display = 'none';
-        captionEl.innerText = "✨ awaiting memories ✨";
+        captionEl.innerText = "Awaiting memories";
         return;
       }
       const imgSrc = images[currentIndex];
@@ -524,12 +455,8 @@ button:disabled {
       downloadBtn.href = imgSrc;
       
       if (loaderDiv) loaderDiv.style.display = 'flex';
-      // preload to ensure loader hides correctly
       const preloader = new Image();
-      preloader.onload = () => {
-        photo.src = imgSrc;
-        // photo.onload will hide loader eventually
-      };
+      preloader.onload = () => { photo.src = imgSrc; };
       preloader.onerror = () => {
         photo.src = imgSrc;
         loaderDiv.style.display = 'none';
@@ -537,16 +464,14 @@ button:disabled {
       preloader.src = imgSrc;
       updateButtonsState();
     }
-    
-    // navigation
+
     function nextPhoto() {
       if (currentIndex < images.length - 1) {
         currentIndex++;
         showCurrentPhoto();
       } else {
-        // gentle feedback
-        infoMsg.innerText = "📌 This is the last memory, but you can relive it 💫";
-        setTimeout(() => { if(images.length) infoMsg.innerText = `📷 ${currentIndex+1} of ${images.length}`; }, 1500);
+        infoMsg.innerText = "Last memory, you can relive it";
+        setTimeout(() => { if(images.length) infoMsg.innerText = `Photo ${currentIndex+1} of ${images.length}`; }, 1500);
       }
     }
     
@@ -555,48 +480,44 @@ button:disabled {
         currentIndex--;
         showCurrentPhoto();
       } else {
-        infoMsg.innerText = "🌟 You're at the very first moment 🌟";
-        setTimeout(() => { if(images.length) infoMsg.innerText = `📷 ${currentIndex+1} of ${images.length}`; }, 1200);
+        infoMsg.innerText = "You're at the very first moment";
+        setTimeout(() => { if(images.length) infoMsg.innerText = `Photo ${currentIndex+1} of ${images.length}`; }, 1200);
       }
     }
-    
-    // attach event listeners (avoid inline onclick duplication)
+
     prevBtn.addEventListener('click', prevPhoto);
     nextBtn.addEventListener('click', nextPhoto);
     
-    // expose to global for possible debugging (not required but safe)
-    window.prevPhoto = prevPhoto;
-    window.nextPhoto = nextPhoto;
-    
-    // also update on window resize (stars canvas)
+    // Starfield background (professional subtle)
+    let starArray = [];
     function resizeStars() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     
-    // ------ STARFIELD animation (enhanced) ------
-    let starArray = [];
     function initStars() {
-      const starCount = 150;
+      const starCount = 140;
+      starArray = [];
       for (let i = 0; i < starCount; i++) {
         starArray.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 2.2 + 0.8,
-          speed: Math.random() * 0.6 + 0.2,
-          opacity: Math.random() * 0.6 + 0.3,
+          radius: Math.random() * 1.8 + 0.6,
+          speed: Math.random() * 0.4 + 0.15,
+          opacity: Math.random() * 0.5 + 0.2,
         });
       }
     }
     
     function drawStars() {
-      if (!canvas || !ctx) return;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#ffffff";
       for (let s of starArray) {
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 240, 200, ${s.opacity + Math.sin(Date.now() * 0.002 + s.x) * 0.2})`;
+        ctx.fillStyle = `rgba(210, 230, 250, ${s.opacity + Math.sin(Date.now() * 0.0015 + s.x) * 0.15})`;
         ctx.fill();
         s.y += s.speed;
         if (s.y > canvas.height) {
@@ -607,65 +528,42 @@ button:disabled {
       requestAnimationFrame(drawStars);
     }
     
-    const ctx = canvas.getContext('2d');
     window.addEventListener('resize', () => {
       resizeStars();
-      // reinitialize star positions to new dimensions elegantly
-      starArray = [];
       initStars();
     });
     resizeStars();
     initStars();
     drawStars();
     
-    // handle if the image load gets stuck, ensure loader disappears after timeout
+    // Safety timeout for loader
     setTimeout(() => {
       if (loaderDiv && loaderDiv.style.display === 'flex') {
-        // safety: if image takes >6 seconds, hide loader (maybe broken path)
         if (photo.complete) loaderDiv.style.display = 'none';
-        else {
-          // still not loaded
-          if (images.length) loaderDiv.style.display = 'none';
-        }
+        else if (images.length) loaderDiv.style.display = 'none';
       }
     }, 6000);
     
-    // start gallery loading
     initializeGallery();
     
-    // additional: if user clicks download, ensure it's latest image
     downloadBtn.addEventListener('click', (e) => {
       if (!images[currentIndex]) {
         e.preventDefault();
         infoMsg.innerText = "No image to download yet";
         return;
       }
-      // set filename based on index
-      const link = downloadBtn;
       const ext = images[currentIndex].split('.').pop();
-      link.download = `firstday_memory_${currentIndex+1}.${ext}`;
+      downloadBtn.download = `firstday_memory_${currentIndex+1}.${ext}`;
     });
     
-    // on any image array change, if current index out of range fix it
     function validateIndex() {
       if (images.length === 0) return;
       if (currentIndex >= images.length) currentIndex = images.length - 1;
       if (currentIndex < 0) currentIndex = 0;
       updateButtonsState();
     }
-    
-    // observe array changes via monkey patch (simple)
-    const originalPush = Array.prototype.push;
-    // but we already call updateButtonsState inside addImageToGallery, also validate index
-    setInterval(() => {
-      validateIndex();
-    }, 200);
-    
-    // final fallback: ensure that if group loads after singles, next button becomes active
-    // also re-trigger update when needed
-    window.addImageToGallery = addImageToGallery; // safe debug
+    setInterval(validateIndex, 200);
   })();
 </script>
 </body>
 </html>
-```

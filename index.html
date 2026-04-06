@@ -100,9 +100,72 @@ function checkImage(path) {
   });
 }
 
-async function loadImages() {
-  // QUICK LOAD: try group first (fast)
-  const groupPath = `images/${folderId}/group.JPG`;
+function loadImages() {
+  const groupPathJPG = `images/${folderId}/group.JPG`;
+  const groupPathjpg = `images/${folderId}/group.jpg`;
+
+  // TRY BOTH FORMATS instantly (no waiting)
+  const imgTest = new Image();
+  imgTest.src = groupPathJPG;
+
+  imgTest.onload = () => {
+    startGallery(groupPathJPG);
+  };
+
+  imgTest.onerror = () => {
+    const imgTest2 = new Image();
+    imgTest2.src = groupPathjpg;
+
+    imgTest2.onload = () => {
+      startGallery(groupPathjpg);
+    };
+
+    imgTest2.onerror = () => {
+      document.getElementById('loader').innerHTML = "No Photos Found";
+    };
+  };
+}
+
+function startGallery(firstImage) {
+  images.push(firstImage);
+  captions.push("The first page of our wonderful school life");
+
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+
+  showPhoto();
+
+  // LOAD singles in background (no blocking)
+  let i = 1;
+
+  function loadNext() {
+    const pathJPG = `images/${folderId}/single${i}.JPG`;
+    const pathjpg = `images/${folderId}/single${i}.jpg`;
+
+    const img = new Image();
+    img.src = pathJPG;
+
+    img.onload = () => {
+      images.push(pathJPG);
+      captions.push("A beautiful start to a bright journey");
+      i++;
+      loadNext();
+    };
+
+    img.onerror = () => {
+      const img2 = new Image();
+      img2.src = pathjpg;
+
+      img2.onload = () => {
+        images.push(pathjpg);
+        captions.push("A beautiful start to a bright journey");
+        i++;
+        loadNext();
+      };
+
+      img2.onerror = () => {
+        return; // stop when no more images
+      };/group.JPG`;
 
   if (await checkImage(groupPath)) {
     images.push(groupPath);

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My First Day</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+
+.main{position:relative;z-index:2;text-align:center;padding:15px}
+
+h1{font-size:clamp(20px,5vw,30px);animation:glow 2s infinite alternate}
+h2{font-size:clamp(16px,4vw,22px);color:#ffd700}
+
+@keyframes glow{from{text-shadow:0 0 10px #fff}to{text-shadow:0 0 25px #00e6ff}}
+
+.card{
+  margin-top:15px;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:10px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.5);
+  max-width:95%;
+  margin:auto;
+}
+
+.img-wrapper{
+  position:relative;
+  border-radius:15px;
+  overflow:hidden;
+  border:3px solid rgba(255,255,255,0.3);
+}
+
+img{
+  width:100%;
+  height:auto;
+  max-height:80vh;
+  object-fit:contain;
+  background:#000;
+}
+
+.caption{
+  margin-top:10px;
+  font-size:clamp(14px,3.5vw,18px);
+  color:#fff;
+  padding:8px;
+}
+
+.controls{margin-top:10px}
+
+button,a.download{
+  border:none;
+  padding:10px 14px;
+  margin:5px;
+  border-radius:10px;
+  font-size:14px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#ff512f,#dd2476);
+  color:#fff;
+  text-decoration:none;
+}
+
+button:hover,a.download:hover{transform:scale(1.1)}
+
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="main">
+<h1>The Indian Heights School</h1>
+<h2>My First Day</h2>
+
+<div class="card">
+  <div class="img-wrapper">
+    <img id="photo" src="" />
+  </div>
+
+  <div class="caption" id="caption"></div>
+
+  <div class="controls">
+    <button onclick="prevPhoto()">⬅ Prev</button>
+    <button onclick="nextPhoto()">Next ➡</button><br>
+    <a id="downloadBtn" class="download" download>⬇ Download</a>
+  </div>
+</div>
+</div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const folderId = urlParams.get('id') || '1';
+
+let images = [];
+let captions = [];
+let currentIndex = 0;
+
+// ADD GROUP PHOTO FIRST
+images.push(`images/${folderId}/group.jpg`);
+captions.push("The first page of our wonderful school life");
+
+// ADD SINGLE PHOTOS (auto detect)
+for (let i = 1; i <= 50; i++) {
+  images.push(`images/${folderId}/single${i}.jpg`);
+  captions.push("A beautiful start to a bright journey");
+}
+
+function showPhoto() {
+  const img = document.getElementById('photo');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const caption = document.getElementById('caption');
+
+  img.src = images[currentIndex];
+  downloadBtn.href = images[currentIndex];
+  caption.innerText = captions[currentIndex];
+}
+
+function nextPhoto() {
+  currentIndex = (currentIndex + 1) % images.length;
+  showPhoto();
+}
+
+function prevPhoto() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  showPhoto();
+}
+
+showPhoto();
+
+// STAR ANIMATION
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for (let i = 0; i < 120; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2,
+    s: Math.random() * 1 + 0.3
+  });
+}
+
+function drawStars() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "white";
+
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.r, 0, Math.PI*2);
+    ctx.fill();
+
+    star.y += star.s;
+    if (star.y > canvas.height) {
+      star.y = 0;
+      star.x = Math.random()*canvas.width;
+    }
+  });
+
+  requestAnimationFrame(drawStars);
+}
+
+drawStars();
+</script>
+
+</body>
+</html>

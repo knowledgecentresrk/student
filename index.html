@@ -10,13 +10,12 @@
 body{
   font-family:'Segoe UI',sans-serif;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-  overflow-x:hidden;
+  color:#fff;text-align:center;overflow:hidden
 }
 
 canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 
-.main{position:relative;z-index:2;text-align:center;padding:15px}
+.main{position:relative;z-index:2;padding:15px}
 
 h1{font-size:clamp(20px,5vw,30px);animation:glow 2s infinite alternate}
 h2{font-size:clamp(16px,4vw,22px);color:#ffd700}
@@ -27,56 +26,70 @@ h2{font-size:clamp(16px,4vw,22px);color:#ffd700}
   margin-top:15px;
   background:rgba(255,255,255,0.1);
   backdrop-filter:blur(10px);
-  border-radius:20px;
+  border-radius:15px;
   padding:10px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.5);
   max-width:95%;
   margin:auto;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5)
 }
 
 .img-wrapper{
   position:relative;
-  border-radius:15px;
   overflow:hidden;
-  border:3px solid rgba(255,255,255,0.3);
+  border-radius:12px
 }
 
 img{
   width:100%;
-  height:auto;
   max-height:80vh;
   object-fit:contain;
-  background:#000;
+  background:#000
 }
+
+/* Image Loader */
+#imgLoader{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:#000;z-index:2
+}
+
+.spinner{
+  width:40px;height:40px;
+  border:4px solid rgba(255,255,255,0.3);
+  border-top:4px solid #fff;
+  border-radius:50%;
+  animation:spin 1s linear infinite
+}
+
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+/* Shine effect */
+.shine{
+  position:absolute;
+  top:0;left:-75%;
+  width:50%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);
+  transform:skewX(-25deg);
+  animation:shine 3s infinite;
+  z-index:1
+}
+
+@keyframes shine{0%{left:-75%}100%{left:125%}}
 
 .caption{
   margin-top:10px;
   font-size:clamp(18px,4.5vw,26px);
-  font-weight:600;
-  color:#fff;
-  padding:10px;
+  font-weight:600
 }
 
-.controls{margin-top:10px}
-
-button,a.download{
-  border:none;
-  padding:10px 14px;
-  margin:5px;
-  border-radius:10px;
-  font-size:14px;
-  cursor:pointer;
+button,a{
+  padding:10px;margin:5px;border:none;border-radius:8px;
   background:linear-gradient(45deg,#ff512f,#dd2476);
-  color:#fff;
-  text-decoration:none;
+  color:#fff;text-decoration:none
 }
 
-button:disabled{
-  opacity:0.4;
-  cursor:not-allowed;
-}
-
-button:hover:not(:disabled),a.download:hover{transform:scale(1.1)}
+button:disabled{opacity:0.4}
 
 </style>
 </head>
@@ -90,114 +103,113 @@ button:hover:not(:disabled),a.download:hover{transform:scale(1.1)}
 
 <div class="card">
   <div class="img-wrapper">
-    <img id="photo" src="" />
+    <div id="imgLoader"><div class="spinner"></div></div>
+    <div class="shine"></div>
+    <img id="photo" />
   </div>
 
   <div class="caption" id="caption"></div>
 
-  <div class="controls">
-    <button id="prevBtn" onclick="prevPhoto()">⬅ Prev</button>
-    <button id="nextBtn" onclick="nextPhoto()">Next ➡</button><br>
-    <a id="downloadBtn" class="download" download>⬇ Download</a>
+  <div>
+    <button id="prevBtn" onclick="prevPhoto()">Prev</button>
+    <button id="nextBtn" onclick="nextPhoto()">Next</button><br>
+    <a id="downloadBtn" download>Download</a>
   </div>
 </div>
 </div>
 
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const folderId = urlParams.get('id') || '1';
+const folderId = new URLSearchParams(window.location.search).get('id') || '1';
 
 let images = [];
 let captions = [];
 let currentIndex = 0;
 
-function addImage(path, captionText) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.src = path;
-    img.onload = () => {
-      images.push(path);
-      captions.push(captionText);
-      resolve();
-    };
-    img.onerror = () => resolve();
-  });
+function tryLoad(src, success){
+  const img = new Image();
+  img.src = src;
+  img.onload = ()=>success(src);
 }
 
-async function loadImages() {
-  // GROUP PHOTO (CAPS JPG)
-  await addImage(`images/${folderId}/group.JPG`, "The first page of our wonderful school life");
+// LOAD FIRST SINGLE IMAGE (PRIORITY)
+tryLoad(`images/${folderId}/single1.JPG`, (src)=>{
+  initGallery(src,false);
+});
 
-  // SINGLE PHOTOS
-  for (let i = 1; i <= 50; i++) {
-    await addImage(`images/${folderId}/single${i}.JPG`, "A beautiful start to a bright journey");
-  }
+tryLoad(`images/${folderId}/single1.jpg`, (src)=>{
+  if(images.length===0) initGallery(src,false);
+});
 
+// FALLBACK TO GROUP
+tryLoad(`images/${folderId}/group.JPG`, (src)=>{
+  if(images.length===0) initGallery(src,true);
+});
+
+tryLoad(`images/${folderId}/group.jpg`, (src)=>{
+  if(images.length===0) initGallery(src,true);
+});
+
+function initGallery(first,isGroup){
+  images.push(first);
+  captions.push(isGroup ? "The first page of our wonderful school life" : "A beautiful start to a bright journey");
   showPhoto();
+
+  let i=2;
+
+  function loadNext(){
+    tryLoad(`images/${folderId}/single${i}.JPG`, (src)=>{
+      images.push(src);
+      captions.push("A beautiful start to a bright journey");
+      i++; loadNext();
+    });
+
+    tryLoad(`images/${folderId}/single${i}.jpg`, (src)=>{
+      images.push(src);
+      captions.push("A beautiful start to a bright journey");
+      i++; loadNext();
+    });
+  }
+
+  loadNext();
 }
 
-function showPhoto() {
-  const img = document.getElementById('photo');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const caption = document.getElementById('caption');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
+function showPhoto(){
+  if(images.length===0) return;
 
-  img.src = images[currentIndex];
-  downloadBtn.href = images[currentIndex];
+  const loader = document.getElementById('imgLoader');
+  loader.style.display = 'flex';
+
+  photo.onload = ()=>{ loader.style.display='none'; };
+
+  photo.src = images[currentIndex];
   caption.innerText = captions[currentIndex];
-
-  // Disable buttons
-  prevBtn.disabled = currentIndex === 0;
-  nextBtn.disabled = currentIndex === images.length - 1;
+  downloadBtn.href = images[currentIndex];
+  prevBtn.disabled = currentIndex===0;
+  nextBtn.disabled = currentIndex===images.length-1;
 }
 
-function nextPhoto() {
-  if (currentIndex < images.length - 1) {
-    currentIndex++;
-    showPhoto();
-  }
-}
+function nextPhoto(){ if(currentIndex<images.length-1){currentIndex++;showPhoto();}}
+function prevPhoto(){ if(currentIndex>0){currentIndex--;showPhoto();}}
 
-function prevPhoto() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    showPhoto();
-  }
-}
-
-loadImages();
-
-// STAR ANIMATION
+// STAR RAIN ANIMATION
 const canvas = document.getElementById('stars');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let stars = [];
-for (let i = 0; i < 120; i++) {
-  stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2,
-    s: Math.random() * 1 + 0.3
-  });
+let stars=[];
+for(let i=0;i<120;i++){
+  stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2,s:Math.random()*1+0.3});
 }
 
-function drawStars() {
+function drawStars(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "white";
+  ctx.fillStyle="white";
 
-  stars.forEach(star => {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.r, 0, Math.PI*2);
-    ctx.fill();
-
-    star.y += star.s;
-    if (star.y > canvas.height) {
-      star.y = 0;
-      star.x = Math.random()*canvas.width;
-    }
+  stars.forEach(star=>{
+    ctx.beginPath();ctx.arc(star.x,star.y,star.r,0,Math.PI*2);ctx.fill();
+    star.y+=star.s;
+    if(star.y>canvas.height){star.y=0;star.x=Math.random()*canvas.width}
   });
 
   requestAnimationFrame(drawStars);

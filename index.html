@@ -63,7 +63,7 @@ button:hover:not(:disabled),a.download:hover{transform:scale(1.1)}
 <div class="loader" id="loader">
   <div class="spinner"></div>
   <div class="loader-text">TIHS</div>
-</
+</div>
 <canvas id="stars"></canvas>
 
 <div class="main" style="display:none" id="mainContent">
@@ -101,8 +101,54 @@ function checkImage(path) {
 }
 
 async function loadImages() {
-  // Load group first
-  if (await checkImage(`images/${folderId}/group.JPG`)) {
+  const groupPath = `images/${folderId}/group.JPG`;
+  const promises = [];
+
+  // check group fast
+  promises.push(checkImage(groupPath).then(exists => {
+    if (exists) {
+      images.push(groupPath);
+      captions.push("The first page of our wonderful school life");
+    }
+  }));
+
+  // check singles in parallel (FAST)
+  for (let i = 1; i <= 50; i++) {
+    let path = `images/${folderId}/single${i}.JPG`;
+    promises.push(checkImage(path).then(exists => {
+      if (exists) {
+        images.push(path);
+        captions.push("A beautiful start to a bright journey");
+      }
+    }));
+  }
+
+  await Promise.all(promises);
+
+  // sort images so group always first, then singles in order
+  images.sort((a, b) => {
+    if (a.includes('group')) return -1;
+    if (b.includes('group')) return 1;
+    return a.localeCompare(b, undefined, { numeric: true });
+  });
+
+  captions = images.map(img =>
+    img.includes('group')
+      ? "The first page of our wonderful school life"
+      : "A beautiful start to a bright journey"
+  );
+
+  // if no images found
+  if (images.length === 0) {
+    document.getElementById('loader').innerHTML = "No Photos Found";
+    return;
+  }
+
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+
+  showPhoto();
+}/group.JPG`)) {
     images.push(`images/${folderId}/group.JPG`);
     captions.push("The first page of our wonderful school life");
   }

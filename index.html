@@ -51,9 +51,10 @@ img{
 
 .caption{
   margin-top:10px;
-  font-size:clamp(14px,3.5vw,18px);
+  font-size:clamp(18px,4.5vw,26px);
+  font-weight:600;
   color:#fff;
-  padding:8px;
+  padding:10px;
 }
 
 .controls{margin-top:10px}
@@ -70,7 +71,12 @@ button,a.download{
   text-decoration:none;
 }
 
-button:hover,a.download:hover{transform:scale(1.1)}
+button:disabled{
+  opacity:0.4;
+  cursor:not-allowed;
+}
+
+button:hover:not(:disabled),a.download:hover{transform:scale(1.1)}
 
 </style>
 </head>
@@ -90,8 +96,8 @@ button:hover,a.download:hover{transform:scale(1.1)}
   <div class="caption" id="caption"></div>
 
   <div class="controls">
-    <button onclick="prevPhoto()">⬅ Prev</button>
-    <button onclick="nextPhoto()">Next ➡</button><br>
+    <button id="prevBtn" onclick="prevPhoto()">⬅ Prev</button>
+    <button id="nextBtn" onclick="nextPhoto()">Next ➡</button><br>
     <a id="downloadBtn" class="download" download>⬇ Download</a>
   </div>
 </div>
@@ -105,37 +111,62 @@ let images = [];
 let captions = [];
 let currentIndex = 0;
 
-// ADD GROUP PHOTO FIRST
-images.push(`images/${folderId}/group.JPG`);
-captions.push("The first page of our wonderful school life");
+function addImage(path, captionText) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.src = path;
+    img.onload = () => {
+      images.push(path);
+      captions.push(captionText);
+      resolve();
+    };
+    img.onerror = () => resolve();
+  });
+}
 
-// ADD SINGLE PHOTOS (auto detect)
-for (let i = 1; i <= 50; i++) {
-  images.push(`images/${folderId}/single${i}.JPG`);
-  captions.push("A beautiful start to a bright journey");
+async function loadImages() {
+  // GROUP PHOTO (CAPS JPG)
+  await addImage(`images/${folderId}/group.JPG`, "The first page of our wonderful school life");
+
+  // SINGLE PHOTOS
+  for (let i = 1; i <= 50; i++) {
+    await addImage(`images/${folderId}/single${i}.JPG`, "A beautiful start to a bright journey");
+  }
+
+  showPhoto();
 }
 
 function showPhoto() {
   const img = document.getElementById('photo');
   const downloadBtn = document.getElementById('downloadBtn');
   const caption = document.getElementById('caption');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
   img.src = images[currentIndex];
   downloadBtn.href = images[currentIndex];
   caption.innerText = captions[currentIndex];
+
+  // Disable buttons
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === images.length - 1;
 }
 
 function nextPhoto() {
-  currentIndex = (currentIndex + 1) % images.length;
-  showPhoto();
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+    showPhoto();
+  }
 }
 
 function prevPhoto() {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  showPhoto();
+  if (currentIndex > 0) {
+    currentIndex--;
+    showPhoto();
+  }
 }
 
-showPhoto();
+loadImages();
 
 // STAR ANIMATION
 const canvas = document.getElementById('stars');
